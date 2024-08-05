@@ -9,14 +9,22 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rclpy REQUIRED)
-find_package(tf2_ros REQUIRED)
+find_package(tf2_ros REQUIRED) # TODO?
+find_package(color_names REQUIRED)
+find_package(color_blob_centroid REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(dex_ivr_interfaces REQUIRED)
+find_package(sar_ros2_interfaces REQUIRED)
 
 # set dependencies
 set(dependencies
   rclpy
   tf2_ros
+  color_names
+  color_blob_centroid
   std_msgs
+  dex_ivr_interfaces
+  sar_ros2_interfaces
 )
 
 # find Python package
@@ -25,7 +33,7 @@ ament_python_install_package(${PROJECT_NAME})
 # install Python executables
 install(PROGRAMS
   # TODO
-  #scripts/<script-name>.py
+  scripts/hazard_detector_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
