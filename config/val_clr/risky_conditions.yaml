@@ -1,0 +1,53 @@
+# risky conditions for Valkyrie/CLR robots in different environments
+household:
+  conditions:
+    - name: human_enters_workspace
+      likelihood: 5
+      consequence: 5
+      consequence_states: [harm_human]
+    - name: object_falls
+      likelihood: 4
+      consequence: 2
+      consequence_states: [cannot_perform_action]
+    - name: robot_navigation_object_collision
+      likelihood: 3
+      consequence: 4
+      consequence_states: [collide_object, damage_object, damage_robot]
+    - name: robot_manipulation_object_collision
+      likelihood: 3
+      consequence: 4
+      consequence_states: [collide_object, damage_object, damage_robot]
+    - name: robot_inhand_manipulation_object_collision
+      likelihood: 3
+      consequence: 4
+      consequence_states: [collide_object, damage_object, damage_robot]
+    - name: environment_map_collision
+      likelihood: 3
+      consequence: 3
+      consequence_states: [collide_env_map, damage_robot]
+lunar_habitat:
+  conditions:
+    - name: human_enters_workspace
+      likelihood: 1
+      consequence: 5
+      consequence_states: [harm_human]
+    - name: object_falls
+      likelihood: 4
+      consequence: 2
+      consequence_states: [cannot_perform_action]
+    - name: robot_navigation_object_collision
+      likelihood: 3
+      consequence: 4
+      consequence_states: [collide_object, damage_object, damage_robot]
+    - name: robot_manipulation_object_collision
+      likelihood: 3
+      consequence: 4
+      consequence_states: [collide_object, damage_object, damage_robot]
+    - name: robot_inhand_manipulation_object_collision
+      likelihood: 3
+      consequence: 4
+      consequence_states: [collide_object, damage_object, damage_robot]
+    - name: environment_map_collision
+      likelihood: 3
+      consequence: 3
+      consequence_states: [collide_env_map, damage_robot]

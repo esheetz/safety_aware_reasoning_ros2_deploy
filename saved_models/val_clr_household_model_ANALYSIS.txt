@@ -1,0 +1,282 @@
+DATASET SUMMARY
+
+*** COLUMN NAMES:
+Index(['COND_NAME_human_enters_workspace',
+       'COND_LIKELI_human_enters_workspace',
+       'COND_CONSEQ_human_enters_workspace',
+       'COND_RISK_human_enters_workspace',
+       'COND_SAFETY_human_enters_workspace',
+       'COND_AUTO_LEVEL_human_enters_workspace', 'COND_NAME_object_falls',
+       'COND_LIKELI_object_falls', 'COND_CONSEQ_object_falls',
+       'COND_RISK_object_falls', 'COND_SAFETY_object_falls',
+       'COND_AUTO_LEVEL_object_falls',
+       'COND_NAME_robot_navigation_object_collision',
+       'COND_LIKELI_robot_navigation_object_collision',
+       'COND_CONSEQ_robot_navigation_object_collision',
+       'COND_RISK_robot_navigation_object_collision',
+       'COND_SAFETY_robot_navigation_object_collision',
+       'COND_AUTO_LEVEL_robot_navigation_object_collision',
+       'COND_NAME_robot_manipulation_object_collision',
+       'COND_LIKELI_robot_manipulation_object_collision',
+       'COND_CONSEQ_robot_manipulation_object_collision',
+       'COND_RISK_robot_manipulation_object_collision',
+       'COND_SAFETY_robot_manipulation_object_collision',
+       'COND_AUTO_LEVEL_robot_manipulation_object_collision',
+       'COND_NAME_robot_inhand_manipulation_object_collision',
+       'COND_LIKELI_robot_inhand_manipulation_object_collision',
+       'COND_CONSEQ_robot_inhand_manipulation_object_collision',
+       'COND_RISK_robot_inhand_manipulation_object_collision',
+       'COND_SAFETY_robot_inhand_manipulation_object_collision',
+       'COND_AUTO_LEVEL_robot_inhand_manipulation_object_collision',
+       'COND_NAME_environment_map_collision',
+       'COND_LIKELI_environment_map_collision',
+       'COND_CONSEQ_environment_map_collision',
+       'COND_RISK_environment_map_collision',
+       'COND_SAFETY_environment_map_collision',
+       'COND_AUTO_LEVEL_environment_map_collision',
+       'CONSEQ_PRE_ACT_harm_human', 'CONSEQ_PRE_ACT_damage_robot',
+       'CONSEQ_PRE_ACT_damage_object', 'CONSEQ_PRE_ACT_collide_env_map',
+       'CONSEQ_PRE_ACT_collide_object', 'CONSEQ_PRE_ACT_cannot_perform_action',
+       'STATE_CONSEQ', 'STATE_RISK', 'STATE_SAFETY', 'STATE_AUTO_LEVEL',
+       'CONSEQ_POST_ACT_harm_human', 'CONSEQ_POST_ACT_damage_robot',
+       'CONSEQ_POST_ACT_damage_object', 'CONSEQ_POST_ACT_collide_env_map',
+       'CONSEQ_POST_ACT_collide_object',
+       'CONSEQ_POST_ACT_cannot_perform_action', 'RISK_MITIGATING_ACTION',
+       'RISK_MITIGATING_ACTION_ENCODED'],
+      dtype='object')
+
+*** INFO:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 130 entries, 0 to 129
+Data columns (total 54 columns):
+ #   Column                                                      Non-Null Count  Dtype  
+---  ------                                                      --------------  -----  
+ 0   COND_NAME_human_enters_workspace                            130 non-null    int64  
+ 1   COND_LIKELI_human_enters_workspace                          130 non-null    float64
+ 2   COND_CONSEQ_human_enters_workspace                          130 non-null    float64
+ 3   COND_RISK_human_enters_workspace                            130 non-null    float64
+ 4   COND_SAFETY_human_enters_workspace                          130 non-null    float64
+ 5   COND_AUTO_LEVEL_human_enters_workspace                      130 non-null    float64
+ 6   COND_NAME_object_falls                                      130 non-null    int64  
+ 7   COND_LIKELI_object_falls                                    130 non-null    float64
+ 8   COND_CONSEQ_object_falls                                    130 non-null    float64
+ 9   COND_RISK_object_falls                                      130 non-null    float64
+ 10  COND_SAFETY_object_falls                                    130 non-null    float64
+ 11  COND_AUTO_LEVEL_object_falls                                130 non-null    float64
+ 12  COND_NAME_robot_navigation_object_collision                 130 non-null    int64  
+ 13  COND_LIKELI_robot_navigation_object_collision               130 non-null    float64
+ 14  COND_CONSEQ_robot_navigation_object_collision               130 non-null    float64
+ 15  COND_RISK_robot_navigation_object_collision                 130 non-null    float64
+ 16  COND_SAFETY_robot_navigation_object_collision               130 non-null    float64
+ 17  COND_AUTO_LEVEL_robot_navigation_object_collision           130 non-null    float64
+ 18  COND_NAME_robot_manipulation_object_collision               130 non-null    int64  
+ 19  COND_LIKELI_robot_manipulation_object_collision             130 non-null    float64
+ 20  COND_CONSEQ_robot_manipulation_object_collision             130 non-null    float64
+ 21  COND_RISK_robot_manipulation_object_collision               130 non-null    float64
+ 22  COND_SAFETY_robot_manipulation_object_collision             130 non-null    float64
+ 23  COND_AUTO_LEVEL_robot_manipulation_object_collision         130 non-null    float64
+ 24  COND_NAME_robot_inhand_manipulation_object_collision        130 non-null    int64  
+ 25  COND_LIKELI_robot_inhand_manipulation_object_collision      130 non-null    float64
+ 26  COND_CONSEQ_robot_inhand_manipulation_object_collision      130 non-null    float64
+ 27  COND_RISK_robot_inhand_manipulation_object_collision        130 non-null    float64
+ 28  COND_SAFETY_robot_inhand_manipulation_object_collision      130 non-null    float64
+ 29  COND_AUTO_LEVEL_robot_inhand_manipulation_object_collision  130 non-null    float64
+ 30  COND_NAME_environment_map_collision                         130 non-null    int64  
+ 31  COND_LIKELI_environment_map_collision                       130 non-null    float64
+ 32  COND_CONSEQ_environment_map_collision                       130 non-null    float64
+ 33  COND_RISK_environment_map_collision                         130 non-null    float64
+ 34  COND_SAFETY_environment_map_collision                       130 non-null    float64
+ 35  COND_AUTO_LEVEL_environment_map_collision                   130 non-null    float64
+ 36  CONSEQ_PRE_ACT_harm_human                                   130 non-null    int64  
+ 37  CONSEQ_PRE_ACT_damage_robot                                 130 non-null    int64  
+ 38  CONSEQ_PRE_ACT_damage_object                                130 non-null    int64  
+ 39  CONSEQ_PRE_ACT_collide_env_map                              130 non-null    int64  
+ 40  CONSEQ_PRE_ACT_collide_object                               130 non-null    int64  
+ 41  CONSEQ_PRE_ACT_cannot_perform_action                        130 non-null    int64  
+ 42  STATE_CONSEQ                                                130 non-null    float64
+ 43  STATE_RISK                                                  130 non-null    float64
+ 44  STATE_SAFETY                                                130 non-null    float64
+ 45  STATE_AUTO_LEVEL                                            130 non-null    float64
+ 46  CONSEQ_POST_ACT_harm_human                                  130 non-null    int64  
+ 47  CONSEQ_POST_ACT_damage_robot                                130 non-null    int64  
+ 48  CONSEQ_POST_ACT_damage_object                               130 non-null    int64  
+ 49  CONSEQ_POST_ACT_collide_env_map                             130 non-null    int64  
+ 50  CONSEQ_POST_ACT_collide_object                              130 non-null    int64  
+ 51  CONSEQ_POST_ACT_cannot_perform_action                       130 non-null    int64  
+ 52  RISK_MITIGATING_ACTION                                      130 non-null    object 
+ 53  RISK_MITIGATING_ACTION_ENCODED                              130 non-null    int64  
+dtypes: float64(34), int64(19), object(1)
+memory usage: 55.0+ KB
+None
+
+*** SHAPE:
+(130, 54)
+
+*** HEAD:
+   COND_NAME_human_enters_workspace  ...  RISK_MITIGATING_ACTION_ENCODED
+0                                 1  ...                               0
+1                                 0  ...                               5
+2                                 0  ...                               2
+3                                 0  ...                               1
+4                                 0  ...                               4
+
+[5 rows x 54 columns]
+
+RISK MITIGATING ACTION ENCODINGS
+    0 : lower_joint_velocities_torques
+    1 : shared_autonomy_manipulation
+    2 : shared_autonomy_navigation
+    3 : supervised_autonomy_backup_navigation
+    4 : teleoperated_manipulation
+    5 : ask_human_intervention_to_proceed
+
+RISK MITIGATING ACTION VALUE COUNTS
+RISK_MITIGATING_ACTION_ENCODED
+5    63
+4    31
+3    15
+2    11
+1     9
+0     1
+Name: count, dtype: int64
+selected columns: ['COND_RISK_human_enters_workspace', 'COND_RISK_object_falls', 'COND_RISK_robot_navigation_object_collision', 'COND_RISK_robot_manipulation_object_collision', 'COND_RISK_robot_inhand_manipulation_object_collision', 'COND_RISK_environment_map_collision', 'STATE_CONSEQ', 'STATE_RISK']
+selected column indices: [3, 9, 15, 21, 27, 33, 42, 43]
+EXPLANATORY AND TARGET VARIABLE SHAPES
+
+*** X SHAPE: (634, 8)
+*** Y SHAPE: (634,)
+
+TRAINING AND TESTING DATA SHAPES
+
+*** TRAINING DATA SHAPES:
+        X shape: (475, 8)
+        Y shape: (475,)
+
+*** TESTING DATA SHAPES:
+        X shape: (159, 8)
+        Y shape: (159,)
+
+RISK MITIGATING ACTION ENCODINGS
+    0 : lower_joint_velocities_torques
+    1 : shared_autonomy_manipulation
+    2 : shared_autonomy_navigation
+    3 : supervised_autonomy_backup_navigation
+    4 : teleoperated_manipulation
+    5 : ask_human_intervention_to_proceed
+
+RISK MITIGATING ACTION VALUE COUNTS
+*** TRAINING DATA:
+RISK_MITIGATING_ACTION_ENCODED
+5    236
+4    121
+3     64
+2     30
+1     18
+0      6
+Name: count, dtype: int64
+
+*** TESTING DATA:
+RISK_MITIGATING_ACTION_ENCODED
+5    83
+4    38
+3    15
+2    13
+1     7
+0     3
+Name: count, dtype: int64
+
+formula:  RISK_MITIGATING_ACTION_ENCODED ~ COND_RISK_human_enters_workspace + COND_RISK_object_falls + COND_RISK_robot_navigation_object_collision + COND_RISK_robot_manipulation_object_collision + COND_RISK_robot_inhand_manipulation_object_collision + COND_RISK_environment_map_collision + STATE_CONSEQ + STATE_RISK
+
+training data shape: (475, 9)
+Warning: Maximum number of iterations has been exceeded.
+         Current function value: 0.335982
+         Iterations: 150
+
+PROMISING MODEL with features:  Index(['COND_RISK_human_enters_workspace', 'COND_RISK_object_falls',
+       'COND_RISK_robot_navigation_object_collision',
+       'COND_RISK_robot_manipulation_object_collision',
+       'COND_RISK_robot_inhand_manipulation_object_collision',
+       'COND_RISK_environment_map_collision', 'STATE_CONSEQ', 'STATE_RISK'],
+      dtype='object')
+
+                                MNLogit Regression Results                                
+==========================================================================================
+Dep. Variable:     RISK_MITIGATING_ACTION_ENCODED   No. Observations:                  475
+Model:                                    MNLogit   Df Residuals:                      430
+Method:                                       MLE   Df Model:                           40
+Date:                            Tue, 30 Apr 2024   Pseudo R-squ.:                  0.7454
+Time:                                    23:44:07   Log-Likelihood:                -159.59
+converged:                                  False   LL-Null:                       -626.84
+Covariance Type:                        nonrobust   LLR p-value:                5.391e-170
+========================================================================================================================
+                    RISK_MITIGATING_ACTION_ENCODED=1       coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------------------------------------------------
+Intercept                                               18.0549   1.21e+07    1.5e-06      1.000   -2.37e+07    2.37e+07
+COND_RISK_human_enters_workspace                         3.8715   1.42e+07   2.73e-07      1.000   -2.77e+07    2.77e+07
+COND_RISK_object_falls                                 -50.5643   8.42e+11     -6e-11      1.000   -1.65e+12    1.65e+12
+COND_RISK_robot_navigation_object_collision             34.9035   1.07e+04      0.003      0.997    -2.1e+04    2.11e+04
+COND_RISK_robot_manipulation_object_collision           46.6078   1.98e+04      0.002      0.998   -3.88e+04    3.89e+04
+COND_RISK_robot_inhand_manipulation_object_collision    46.5240   1.23e+05      0.000      1.000    -2.4e+05     2.4e+05
+COND_RISK_environment_map_collision                    -17.8987   1.66e+06  -1.08e-05      1.000   -3.26e+06    3.26e+06
+STATE_CONSEQ                                           -10.3727   1.59e+07  -6.53e-07      1.000   -3.11e+07    3.11e+07
+STATE_RISK                                             -13.8882   3.04e+07  -4.58e-07      1.000   -5.95e+07    5.95e+07
+------------------------------------------------------------------------------------------------------------------------
+                    RISK_MITIGATING_ACTION_ENCODED=2       coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------------------------------------------------
+Intercept                                               47.2047   8.55e+07   5.52e-07      1.000   -1.68e+08    1.68e+08
+COND_RISK_human_enters_workspace                        28.6323        nan        nan        nan         nan         nan
+COND_RISK_object_falls                                  -0.6190   1.46e+08  -4.23e-09      1.000   -2.87e+08    2.87e+08
+COND_RISK_robot_navigation_object_collision             46.6456   1.07e+04      0.004      0.997    -2.1e+04    2.11e+04
+COND_RISK_robot_manipulation_object_collision           43.8443   1.98e+04      0.002      0.998   -3.88e+04    3.89e+04
+COND_RISK_robot_inhand_manipulation_object_collision    44.2132   1.23e+05      0.000      1.000    -2.4e+05     2.4e+05
+COND_RISK_environment_map_collision                    -17.4669   1.18e+06  -1.48e-05      1.000   -2.31e+06    2.31e+06
+STATE_CONSEQ                                           -27.5630   9.87e+07  -2.79e-07      1.000   -1.93e+08    1.93e+08
+STATE_RISK                                             -51.5356        nan        nan        nan         nan         nan
+------------------------------------------------------------------------------------------------------------------------
+                    RISK_MITIGATING_ACTION_ENCODED=3       coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------------------------------------------------
+Intercept                                               55.1751        nan        nan        nan         nan         nan
+COND_RISK_human_enters_workspace                        30.4131   5.25e+07   5.79e-07      1.000   -1.03e+08    1.03e+08
+COND_RISK_object_falls                                  -0.0886   1.06e+08  -8.38e-10      1.000   -2.07e+08    2.07e+08
+COND_RISK_robot_navigation_object_collision             39.9601   1.07e+04      0.004      0.997    -2.1e+04    2.11e+04
+COND_RISK_robot_manipulation_object_collision           44.9955   1.98e+04      0.002      0.998   -3.88e+04    3.89e+04
+COND_RISK_robot_inhand_manipulation_object_collision   -15.3792   1.81e+06  -8.48e-06      1.000   -3.55e+06    3.55e+06
+COND_RISK_environment_map_collision                     70.6920   9.45e+04      0.001      0.999   -1.85e+05    1.85e+05
+STATE_CONSEQ                                           -35.8710   6.91e+07  -5.19e-07      1.000   -1.35e+08    1.35e+08
+STATE_RISK                                             -52.5931   1.26e+08  -4.17e-07      1.000   -2.47e+08    2.47e+08
+------------------------------------------------------------------------------------------------------------------------
+                    RISK_MITIGATING_ACTION_ENCODED=4       coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------------------------------------------------
+Intercept                                              -23.4059        nan        nan        nan         nan         nan
+COND_RISK_human_enters_workspace                       -73.1310    3.6e+07  -2.03e-06      1.000   -7.05e+07    7.05e+07
+COND_RISK_object_falls                                  -6.4745   2.59e+08   -2.5e-08      1.000   -5.07e+08    5.07e+08
+COND_RISK_robot_navigation_object_collision             39.3177   1.07e+04      0.004      0.997    -2.1e+04    2.11e+04
+COND_RISK_robot_manipulation_object_collision           45.1277   1.98e+04      0.002      0.998   -3.88e+04    3.89e+04
+COND_RISK_robot_inhand_manipulation_object_collision    55.3479   1.23e+05      0.000      1.000    -2.4e+05     2.4e+05
+COND_RISK_environment_map_collision                     64.0173   9.45e+04      0.001      0.999   -1.85e+05    1.85e+05
+STATE_CONSEQ                                           -63.9391   3.12e+07  -2.05e-06      1.000   -6.12e+07    6.12e+07
+STATE_RISK                                             157.7292    8.4e+07   1.88e-06      1.000   -1.65e+08    1.65e+08
+------------------------------------------------------------------------------------------------------------------------
+                    RISK_MITIGATING_ACTION_ENCODED=5       coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------------------------------------------------
+Intercept                                               53.9704        nan        nan        nan         nan         nan
+COND_RISK_human_enters_workspace                        27.5910    3.7e+06   7.46e-06      1.000   -7.25e+06    7.25e+06
+COND_RISK_object_falls                                 129.8087        nan        nan        nan         nan         nan
+COND_RISK_robot_navigation_object_collision             39.4228   1.07e+04      0.004      0.997    -2.1e+04    2.11e+04
+COND_RISK_robot_manipulation_object_collision           44.4594   1.98e+04      0.002      0.998   -3.88e+04    3.89e+04
+COND_RISK_robot_inhand_manipulation_object_collision    50.0342   1.23e+05      0.000      1.000    -2.4e+05     2.4e+05
+COND_RISK_environment_map_collision                     64.8952   9.45e+04      0.001      0.999   -1.85e+05    1.85e+05
+STATE_CONSEQ                                           -37.3414        nan        nan        nan         nan         nan
+STATE_RISK                                             -46.7756        nan        nan        nan         nan         nan
+========================================================================================================================
+
+Test accuracy: 0.8742138364779874
+Confusion matrix:
+[[ 3  0  0  0  0  0]
+ [ 1  4  1  0  1  0]
+ [ 1  1  9  0  2  0]
+ [ 1  0  1 13  0  0]
+ [ 0  1  2  3 32  0]
+ [ 0  0  1  1  3 78]]
+Saving model to file...
+Saved model to file! Model location: /punkrobot/nstgro_ws/src/safety_aware_reasoning/scripts/../saved_models/val_clr_household_cond_risk_state_conseq_risk_model.sav
