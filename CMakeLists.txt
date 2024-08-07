@@ -34,12 +34,15 @@ ament_python_install_package(${PROJECT_NAME})
 install(PROGRAMS
   # TODO
   scripts/hazard_detector_node.py
+  scripts/risk_mitigating_action_predictor_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
 # install additional directories
 install(DIRECTORY
+  config
   launch
+  saved_models
   DESTINATION share/${PROJECT_NAME}
 )
 
