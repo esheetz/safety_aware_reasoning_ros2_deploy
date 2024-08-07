@@ -35,7 +35,7 @@ def generate_launch_description():
     hazard_detector = Node(
         package='safety_aware_reasoning_ros2_deploy',
         executable='hazard_detector_node.py',
-        name='HazardDetector'
+        name='SAR_Hazard_Detector'
     )
 
     nodes = [color_blob, hazard_detector]

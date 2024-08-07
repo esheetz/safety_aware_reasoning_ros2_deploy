@@ -27,7 +27,7 @@ class HazardDetector(Node):
         self.initialize_connections()
         self.initialize_service_clients()
 
-        self.get_logger().info("[Hazard Detector] Constructed")
+        self.get_logger().info("Constructed")
 
     ######################
     ### INITIALIZATION ###
@@ -48,7 +48,7 @@ class HazardDetector(Node):
         )
         self.looking_for_object_sub # prevent unused variable warning
 
-        self.get_logger().info("[Hazard Detector] Created subscribers!")
+        self.get_logger().info("Created subscribers!")
 
         # create publishers
         self.detected_hazards_pub = self.create_publisher(
@@ -69,7 +69,7 @@ class HazardDetector(Node):
             callback_group=self.detected_hazards_cb_group
         )
 
-        self.get_logger().info("[Hazard Detector] Created publishers!")
+        self.get_logger().info("Created publishers!")
 
         return
 
@@ -86,9 +86,9 @@ class HazardDetector(Node):
 
         # wait for service to be advertised and available
         self.color_blob_client.wait_for_service()
-        self.get_logger().info("[Hazard Detector] Service /color_blob_find exists!")
+        self.get_logger().info("Service /color_blob_find exists!")
 
-        self.get_logger().info("[Hazard Detector] Created service clients!")
+        self.get_logger().info("Created service clients!")
 
         return
 
@@ -100,7 +100,7 @@ class HazardDetector(Node):
         # set flag
         self.looking_for_object = msg.data
         self.get_logger().info(
-            "[Hazard Detector] Robot {} currently looking for an object to interact with".format(
+            "Robot {} currently looking for an object to interact with".format(
                 "IS" if self.looking_for_object else "IS NOT"
             )
         )
@@ -158,14 +158,14 @@ class HazardDetector(Node):
 
     def color_blob_detection_done_callback(self, response):
         # got response!
-        self.get_logger().debug("[Hazard Detector] Service call successful!")
+        self.get_logger().debug("Service call successful!")
 
         # check response
         if self.check_color_blobs_detected(response):
-            self.get_logger().info("[Hazard Detector] Color blob detector found something")
+            self.get_logger().info("Color blob detector found something")
             self.detected_blob_pose = response.result().centroid_pose
         else:
-            self.get_logger().info("[Hazard Detector] Color blob detector did not find anything")
+            self.get_logger().info("Color blob detector did not find anything")
             self.detected_blob_pose = None
 
         return
