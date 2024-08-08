@@ -36,6 +36,7 @@ install(PROGRAMS
   # TODO
   scripts/hazard_detector_node.py
   scripts/risk_mitigating_action_predictor_node.py
+  scripts/safety_reporter_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
