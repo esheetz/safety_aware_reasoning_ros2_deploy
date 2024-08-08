@@ -28,6 +28,7 @@ def main(args=None):
     executor.spin()
 
     # destroy node
+    executor.shutdown()
     reporter.destroy_node()
     rclpy.shutdown()
 
