@@ -15,6 +15,7 @@
   <exec_depend>color_names</exec_depend>
   <exec_depend>color_blob_centroid</exec_depend>
   <exec_depend>std_msgs</exec_depend>
+  <exec_depend>vision_msgs</exec_depend>
   <exec_depend>dex_ivr_interfaces</exec_depend>
   <exec_depend>sar_ros2_interfaces</exec_depend>
 
