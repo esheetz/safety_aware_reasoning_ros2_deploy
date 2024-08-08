@@ -9,7 +9,6 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rclpy REQUIRED)
-find_package(tf2_ros REQUIRED) # TODO?
 find_package(color_names REQUIRED)
 find_package(color_blob_centroid REQUIRED)
 find_package(std_msgs REQUIRED)
@@ -33,9 +32,9 @@ ament_python_install_package(${PROJECT_NAME})
 
 # install Python executables
 install(PROGRAMS
-  # TODO
   scripts/hazard_detector_node.py
   scripts/risk_mitigating_action_predictor_node.py
+  scripts/risk_mitigation_control_node.py
   scripts/safety_reporter_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
