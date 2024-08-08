@@ -23,6 +23,7 @@ set(dependencies
   color_names
   color_blob_centroid
   std_msgs
+  vision_msgs
   dex_ivr_interfaces
   sar_ros2_interfaces
 )

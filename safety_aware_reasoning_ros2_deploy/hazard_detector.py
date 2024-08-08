@@ -8,6 +8,7 @@ from rclpy.node import Node
 from rclpy.callback_groups import MutuallyExclusiveCallbackGroup, ReentrantCallbackGroup
 
 from std_msgs.msg import Bool
+from vision_msgs.msg import ObjectHypothesis
 from geometry_msgs.msg import PoseStamped
 from dex_ivr_interfaces.srv import BlobCentroid
 from sar_ros2_interfaces.msg import DetectedHazards
@@ -36,9 +37,10 @@ class HazardDetector(Node):
     def initialize_connections(self):
         # initialize callback groups
         self.looking_for_object_cb_group = MutuallyExclusiveCallbackGroup()
+        self.human_detection_cb_group = MutuallyExclusiveCallbackGroup()
         self.detected_hazards_cb_group = MutuallyExclusiveCallbackGroup()
 
-        # create subscriber
+        # create subscribers
         self.looking_for_object_sub = self.create_subscription(
             Bool,
             "/robot_looking_for_object",
@@ -48,6 +50,15 @@ class HazardDetector(Node):
         )
         self.looking_for_object_sub # prevent unused variable warning
 
+        self.human_detection_sub = self.create_subscription(
+            ObjectHypothesis,
+            "/yolo/detections",
+            self.human_detection_callback,
+            10,
+            callback_group=self.human_detection_cb_group
+        )
+        self.human_detection_sub # prevent unused variable warning
+
         self.get_logger().info("Created subscribers!")
 
         # create publishers
@@ -56,6 +67,7 @@ class HazardDetector(Node):
             "/sar_detected_hazards",
             10
         )
+
         self.unsafe_conditions_pub = self.create_publisher(
             Bool,
             "/sar_unsafe_state",
@@ -107,12 +119,23 @@ class HazardDetector(Node):
 
         return
 
+    def human_detection_callback(self, msg : ObjectHypothesis):
+        # check if person detected
+        if msg.class_id == 'person':
+            self.detected_humans = msg.score
+            # check confidence of detection
+            if msg.score > 0.0:
+                self.get_logger().info("Human detector found a person with confidence {}".format(self.detected_humans))
+            else:
+                self.get_logger().debug("Human detector did not find a person")
+
+        return
+
     def detect_hazards_callback(self):
         # create empty hazard message
         haz_msg = DetectedHazards()
 
         # call perception helpers
-        self.call_human_detection()
         self.call_color_blob_service()
 
         # check each detected hazard
@@ -122,8 +145,7 @@ class HazardDetector(Node):
         unexpected_object_seen = self.unexpected_object_interaction_detection()
 
         # reset perceived objects
-        self.detected_blob_pose = None
-        self.detected_humans = None
+        self.reset_perceived_objects()
 
         # set message fields for hazard
         # hazard: human in workspace
@@ -165,17 +187,9 @@ class HazardDetector(Node):
             self.get_logger().info("Color blob detector found something")
             self.detected_blob_pose = response.result().centroid_pose
         else:
-            self.get_logger().info("Color blob detector did not find anything")
+            self.get_logger().debug("Color blob detector did not find anything")
             self.detected_blob_pose = None
 
-        return
-
-    ########################################
-    ### HUMAN DETECTION HELPER FUNCTIONS ###
-    ########################################
-
-    def call_human_detection(self):
-        # TODO pending Jodi's help with human detection
         return
 
     #############################################
@@ -201,10 +215,17 @@ class HazardDetector(Node):
     ### HAZARD DETECTION HELPER FUNCTIONS ###
     #########################################
 
+    def reset_perceived_objects(self):
+        # reset detected color blobs; this gets called regularly
+        self.detected_blob_pose = None
+        # do not reset human detections; persist detection until new detection is received
+        # self.detected_humans = None
+        return
+
     def human_detection(self) -> bool:
-        if self.detected_humans:
-            # TODO may need to do some thresholding here
-            return True
+        if self.detected_humans != None:
+            # threshold human detection confidence
+            return (self.detected_humans > 0.10) # TODO threshold?
         else: # self.detected_humans is None
             return False
 
