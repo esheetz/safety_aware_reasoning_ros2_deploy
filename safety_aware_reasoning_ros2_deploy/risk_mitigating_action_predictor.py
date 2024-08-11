@@ -92,12 +92,14 @@ class RiskMitigatingActionPredictor(Node):
     ### CALLBACKS ###
     #################
 
-    def detected_hazards_callback(self, msg):
+    def detected_hazards_callback(self, msg : DetectedHazards):
         # add detected hazards to internal message
         for i in range(len(msg.hazard_names)):
             # set flag for hazard
             self.detected_hazards[msg.hazard_names[i]] = msg.hazard_detections[i]
             # note that this assumes hazards persist unless explicitly detected to be False
+        # store message internally
+        self.rma.hazards = msg
 
         # predict risk mitigating action
         self.predict_risk_mitigating_action()
@@ -225,7 +227,7 @@ class RiskMitigatingActionPredictor(Node):
             return
 
         # format current state information as data frame
-        self.get_logger().info("CURRENT STATE INFO: {}".format(curr_state_dict))
+        self.get_logger().debug("CURRENT STATE INFO: {}".format(curr_state_dict))
         curr_state = pd.DataFrame(curr_state_dict)
 
         # get prediction from model based on current state
