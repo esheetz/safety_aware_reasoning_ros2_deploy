@@ -15,18 +15,8 @@ class RiskMitigationControl(Node):
         # initialize parent class
         super().__init__("SAR_Risk_Mitigation_Control")
 
-        # read ROS parameters
-        self.declare_parameter("robot", rclpy.Parameter.Type.STRING)
-        self.robot = self.get_parameter("robot").value
-
         # initialize internal parameters
-        self.soft_estop_topic = None
-        if self.robot == 'val':
-            self.soft_estop_topic = "/val_soft_stop/safety_flag"
-        elif self.robot == 'clr':
-            self.soft_estop_topic = "/drt_soft_stop/safety_flag"
-        else:
-            self.get_logger().error("Unrecognized robot {}, expect 'val' or 'clr'".format(self.robot))
+        self.soft_estop_topic = "/drt_soft_stop/safety_flag"
 
         # initialize connections
         self.initialize_connections()
@@ -103,7 +93,7 @@ class RiskMitigationControl(Node):
         estop_msg.data = True
         self.soft_estop_pub.publish(estop_msg)
 
-        self.get_logger().info("Performing soft e-stop for robot {}".format(self.robot))
+        self.get_logger().info("Performing soft e-stop")
 
         return
 
@@ -115,8 +105,8 @@ class RiskMitigationControl(Node):
         self.torque_scaling_pub.publish(low_scaling_msg)
 
         self.get_logger().info(
-            "Lowering joint velocity and torque scaling to {} for robot {}".format(
-                low_scaling_msg.data, self.robot
+            "Lowering joint velocity and torque scaling to {}".format(
+                low_scaling_msg.data
             )
         )
 
