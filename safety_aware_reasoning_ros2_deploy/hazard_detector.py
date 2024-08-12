@@ -20,6 +20,7 @@ class HazardDetector(Node):
 
         # initialize internal parameters
         self.loop_rate = 5.0 # Hz
+        self.min_blob_size = 50 # look for bigger blobs to reduce noise
         self.looking_for_object = False
         self.detected_blob_pose = None
         self.detected_humans = None
@@ -206,6 +207,7 @@ class HazardDetector(Node):
 
         # set the color, use default for everything else
         request.color = color
+        request.min_blob_size = self.min_blob_size
 
         # call service
         future = self.color_blob_client.call_async(request)
