@@ -20,9 +20,14 @@ class HazardDetector(Node):
 
         # initialize internal parameters
         self.loop_rate = 5.0 # Hz
-        self.min_blob_size = 50 # look for bigger blobs to reduce noise
+        self.min_blob_size = 50.0 # look for bigger blobs to reduce noise
         self.looking_for_object = False
-        self.detected_blob_pose = None
+        self.manipulation_blob_color = "red"
+        self.navigation_blob_color = "green" # TODO color?
+        self.detected_blob_pose = {
+            self.manipulation_blob_color : None,
+            self.navigation_blob_color : None
+        }
         self.detected_humans = None
 
         # initialize connections and service clients
@@ -137,13 +142,15 @@ class HazardDetector(Node):
         haz_msg = DetectedHazards()
 
         # call perception helpers
-        self.call_color_blob_service()
+        self.call_manipulation_color_blob_service()
+        self.call_navigation_color_blob_service()
 
         # check each detected hazard
         human_present = self.human_detection()
         expected_object_seen = self.expected_object_interaction_detection()
         object_fell = (not expected_object_seen) if self.looking_for_object else False
         unexpected_object_seen = self.unexpected_object_interaction_detection()
+        nav_collision = self.navigation_collision_detection()
 
         # reset perceived objects
         self.reset_perceived_objects()
@@ -165,6 +172,14 @@ class HazardDetector(Node):
         haz_msg.hazard_names.append("robot_inhand_manipulation_object_collision")
         haz_msg.hazard_detections.append(unexpected_object_seen)
 
+        # navigation collision
+        haz_msg.hazard_names.append("robot_navigation_object_collision")
+        haz_msg.hazard_detections.append(nav_collision)
+
+        # map collision
+        haz_msg.hazard_names.append("environment_map_collision")
+        haz_msg.hazard_detections.append(nav_collision)
+
         # publish all detected hazards message
         self.detected_hazards_pub.publish(haz_msg)
 
@@ -179,19 +194,29 @@ class HazardDetector(Node):
     ### SERVICE CLIENT CALLBACK ###
     ###############################
 
-    def color_blob_detection_done_callback(self, response):
+    def color_blob_detection_done_callback(self, response, color, blob_name):
         # got response!
         self.get_logger().debug("Service call successful!")
 
         # check response
         if self.check_color_blobs_detected(response):
-            self.get_logger().info("Color blob detector found something")
-            self.detected_blob_pose = response.result().centroid_pose
+            self.get_logger().info("Color blob {} detector found something".format(blob_name))
+            self.detected_blob_pose[color] = response.result().centroid_pose
         else:
-            self.get_logger().debug("Color blob detector did not find anything")
-            self.detected_blob_pose = None
+            self.get_logger().debug("Color blob {} detector did not find anything".format(blob_name))
+            self.detected_blob_pose[color] = None
 
         return
+
+    def manip_color_blob_detection_done_callback(self, response):
+        self.color_blob_detection_done_callback(response,
+                                                self.manipulation_blob_color,
+                                                "MANIPULATION")
+
+    def nav_color_blob_detection_done_callback(self, response):
+        self.color_blob_detection_done_callback(response,
+                                                self.navigation_blob_color,
+                                                "NAVIGATION")
 
     #############################################
     ### COLOR BLOB DETECTION HELPER FUNCTIONS ###
@@ -201,7 +226,7 @@ class HazardDetector(Node):
         # check if color blobs detected
         return (response.result().centroid_pose.header.frame_id != "")
 
-    def call_color_blob_service(self, color="red"):
+    def call_color_blob_service(self, color, callback_function):
         # create request
         request = BlobCentroid.Request()
 
@@ -211,7 +236,15 @@ class HazardDetector(Node):
 
         # call service
         future = self.color_blob_client.call_async(request)
-        future.add_done_callback(self.color_blob_detection_done_callback)
+        future.add_done_callback(callback_function)
+
+    def call_manipulation_color_blob_service(self):
+        self.call_color_blob_service(self.manipulation_blob_color,
+                                     self.manip_color_blob_detection_done_callback)
+
+    def call_navigation_color_blob_service(self):
+        self.call_color_blob_service(self.navigation_blob_color,
+                                     self.nav_color_blob_detection_done_callback)
 
     #########################################
     ### HAZARD DETECTION HELPER FUNCTIONS ###
@@ -219,7 +252,8 @@ class HazardDetector(Node):
 
     def reset_perceived_objects(self):
         # reset detected color blobs; this gets called regularly
-        self.detected_blob_pose = None
+        self.detected_blob_pose[self.manipulation_blob_color] = None
+        self.detected_blob_pose[self.navigation_blob_color] = None
         # do not reset human detections; persist detection until new detection is received
         # self.detected_humans = None
         return
@@ -232,15 +266,22 @@ class HazardDetector(Node):
             return False
 
     def expected_object_interaction_detection(self) -> bool:
-        if self.looking_for_object and self.detected_blob_pose:
+        if self.looking_for_object and self.detected_blob_pose[self.manipulation_blob_color]:
             return True
         else:
             # not looking for object or no detected object
             return False
 
     def unexpected_object_interaction_detection(self) -> bool:
-        if (not self.looking_for_object) and self.detected_blob_pose:
+        if (not self.looking_for_object) and self.detected_blob_pose[self.manipulation_blob_color]:
             return True
         else:
             # looking for object or no detected object
+            return False
+
+    def navigation_collision_detection(self) -> bool:
+        if self.detected_blob_pose[self.navigation_blob_color]:
+            return True
+        else:
+            # no detected object
             return False
