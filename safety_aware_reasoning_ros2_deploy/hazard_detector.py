@@ -19,8 +19,8 @@ class HazardDetector(Node):
         super().__init__("SAR_Hazard_Detector")
 
         # initialize internal parameters
-        self.loop_rate = 5.0 # Hz
-        self.min_blob_size = 50.0 # look for bigger blobs to reduce noise
+        self.loop_rate = 1.0 # Hz
+        self.min_blob_size = 25.0 # look for bigger blobs to reduce noise
         self.looking_for_object = False
         self.manipulation_blob_color = "red"
         self.navigation_blob_color = "green" # TODO color?
@@ -197,6 +197,10 @@ class HazardDetector(Node):
     def color_blob_detection_done_callback(self, response, color, blob_name):
         # got response!
         self.get_logger().debug("Service call successful!")
+
+        if blob_name == "NAVIGATION":
+            self.detected_blob_pose[color] = None
+            return
 
         # check response
         if self.check_color_blobs_detected(response):
