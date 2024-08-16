@@ -36,6 +36,7 @@ install(PROGRAMS
   scripts/risk_mitigating_action_predictor_node.py
   scripts/risk_mitigation_control_node.py
   scripts/safety_reporter_node.py
+  scripts/publish_test_msg.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
