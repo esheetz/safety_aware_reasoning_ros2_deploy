@@ -13,6 +13,14 @@ from geometry_msgs.msg import PoseStamped
 from dex_ivr_interfaces.srv import BlobCentroid
 from sar_ros2_interfaces.msg import DetectedHazards
 
+"""
+TODO: tidy this up!
+
+changes to human blob detection were made when human detector would not work on Valkyrie;
+probably want a parameter or something to decide if human detection is from blob
+or from YOLO perception library
+"""
+
 class HazardDetector(Node):
     def __init__(self):
         # initialize parent class
@@ -28,6 +36,7 @@ class HazardDetector(Node):
             self.manipulation_blob_color : None,
             self.navigation_blob_color : None
         }
+        self.human_blob_color = "green"
         self.detected_humans = None
 
         # initialize connections and service clients
@@ -144,6 +153,7 @@ class HazardDetector(Node):
         # call perception helpers
         self.call_manipulation_color_blob_service()
         self.call_navigation_color_blob_service()
+        self.call_human_color_blob_service()
 
         # check each detected hazard
         human_present = self.human_detection()
@@ -222,6 +232,14 @@ class HazardDetector(Node):
                                                 self.navigation_blob_color,
                                                 "NAVIGATION")
 
+    def human_color_blob_detection_done_callback(self, response):
+        if self.check_color_blobs_detected(response):
+            self.get_logger().info("Color blob HUMAN detector found something")
+            self.detected_humans = response.result().centroid_pose
+        else:
+            self.detected_humans = None
+        return
+
     #############################################
     ### COLOR BLOB DETECTION HELPER FUNCTIONS ###
     #############################################
@@ -250,6 +268,10 @@ class HazardDetector(Node):
         self.call_color_blob_service(self.navigation_blob_color,
                                      self.nav_color_blob_detection_done_callback)
 
+    def call_human_color_blob_service(self):
+        self.call_color_blob_service(self.human_blob_color,
+                                     self.human_color_blob_detection_done_callback)
+
     #########################################
     ### HAZARD DETECTION HELPER FUNCTIONS ###
     #########################################
@@ -263,6 +285,8 @@ class HazardDetector(Node):
         return
 
     def human_detection(self) -> bool:
+        if isinstance(self.detected_humans, PoseStamped):
+            return True
         if self.detected_humans != None:
             # threshold human detection confidence
             return (self.detected_humans > 0.10) # TODO threshold?
